@@ -1,0 +1,54 @@
+.dash-topbar
+{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+  gap: 14px;
+}
+
+.dash-topbar__left
+{
+  display: grid;
+  gap: 4px;
+}
+
+.dash-topbar__kicker
+{
+  font-size: 12px;
+  color: var(--dash-muted);
+}
+
+.dash-topbar__title
+{
+  margin: 0;
+  font-size: 28px;
+  letter-spacing: 0.2px;
+}
+
+.dash-topbar__user
+{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background: var(--dash-surface);
+  border: 1px solid var(--dash-border);
+  border-radius: 999px;
+  box-shadow: var(--dash-shadow);
+}
+
+.dash-topbar__name
+{
+  font-size: 14px;
+  color: var(--dash-muted);
+}
+
+.dash-topbar__avatar
+{
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #e5e7eb, #cbd5e1);
+  border: 1px solid var(--dash-border);
+}

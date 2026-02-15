@@ -1,0 +1,75 @@
+<app-ui-card title="Mitarbeiter" tone="neutral" subtitle="Suchen, filtern, anlegen, bearbeiten, löschen">
+  <div class="dash-actions">
+    <input class="dash-input" type="text" placeholder="Suche Name, Abteilung, E-Mail" [ngModel]="q" (ngModelChange)="onQ($event)">
+    <select class="dash-select" [ngModel]="status" (ngModelChange)="onStatus($event)">
+      <option value="Alle">Alle</option>
+      <option value="Aktiv">Aktiv</option>
+      <option value="Abwesend">Abwesend</option>
+      <option value="Inaktiv">Inaktiv</option>
+    </select>
+    <button class="dash-btn" data-tone="primary" type="button" (click)="openNew()">Neuer Mitarbeiter</button>
+  </div>
+
+  <div class="dash-tablewrap" style="margin-top: 14px;">
+    <table class="dash-table">
+      <thead>
+        <tr>
+          <th class="dash-table__th">Name</th>
+          <th class="dash-table__th">Abteilung</th>
+          <th class="dash-table__th">E-Mail</th>
+          <th class="dash-table__th">Status</th>
+          <th class="dash-table__th">Aktion</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="dash-table__tr" *ngFor="let e of (employees$ | async)">
+          <td class="dash-table__td">{{ e.name }}</td>
+          <td class="dash-table__td">{{ e.dept }}</td>
+          <td class="dash-table__td">{{ e.email }}</td>
+          <td class="dash-table__td">
+            <span class="dash-pill" [attr.data-tone]="pillTone(e.status)">{{ e.status }}</span>
+          </td>
+          <td class="dash-table__td">
+            <div class="dash-actions" style="justify-content: flex-end;">
+              <button class="dash-btn" type="button" (click)="openEdit(e)">Bearbeiten</button>
+              <button class="dash-btn" data-tone="danger" type="button" (click)="remove(e.id)">Löschen</button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</app-ui-card>
+
+<app-ui-modal [open]="modalOpen" title="Mitarbeiter speichern" (close)="modalOpen = false">
+  <div class="dash-form">
+    <div class="dash-field">
+      <label class="dash-label">Name</label>
+      <input class="dash-input" type="text" [ngModel]="formName" (ngModelChange)="formName = $event">
+    </div>
+
+    <div class="dash-field">
+      <label class="dash-label">Abteilung</label>
+      <input class="dash-input" type="text" [ngModel]="formDept" (ngModelChange)="formDept = $event">
+    </div>
+
+    <div class="dash-field dash-form__full">
+      <label class="dash-label">E-Mail</label>
+      <input class="dash-input" type="email" [ngModel]="formEmail" (ngModelChange)="formEmail = $event">
+    </div>
+
+    <div class="dash-field dash-form__full">
+      <label class="dash-label">Status</label>
+      <select class="dash-select" [ngModel]="formStatus" (ngModelChange)="formStatus = $event">
+        <option value="Aktiv">Aktiv</option>
+        <option value="Abwesend">Abwesend</option>
+        <option value="Inaktiv">Inaktiv</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="dash-modal__foot">
+    <button class="dash-btn" type="button" (click)="modalOpen = false">Abbrechen</button>
+    <button class="dash-btn" data-tone="primary" type="button" (click)="save()">Speichern</button>
+  </div>
+</app-ui-modal>

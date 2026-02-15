@@ -1,0 +1,49 @@
+<section class="dash-grid">
+  <app-ui-card title="Zusammenfassung" tone="neutral" subtitle="Live berechnet aus Store-Daten">
+    <ng-container *ngIf="summary$ | async as s">
+      <div class="rep-kpis">
+        <div class="rep-kpi">
+          <div class="rep-kpi__value">{{ s.employeesTotal }}</div>
+          <div class="rep-kpi__label">Mitarbeiter</div>
+        </div>
+        <div class="rep-kpi">
+          <div class="rep-kpi__value">{{ s.tasksTotal }}</div>
+          <div class="rep-kpi__label">Aufgaben</div>
+        </div>
+        <div class="rep-kpi">
+          <div class="rep-kpi__value">{{ s.absencesTotal }}</div>
+          <div class="rep-kpi__label">Abwesenheitseinträge</div>
+        </div>
+        <div class="rep-kpi">
+          <div class="rep-kpi__value">{{ s.openTasks }}</div>
+          <div class="rep-kpi__label">Offen</div>
+        </div>
+      </div>
+
+      <div class="rep-actions">
+        <button class="dash-btn" data-tone="primary" type="button" (click)="downloadJson(s)">Report als JSON laden</button>
+      </div>
+    </ng-container>
+  </app-ui-card>
+
+  <app-ui-card title="Mitarbeiter nach Abteilung" tone="accent" subtitle="Mini-Auswertung">
+    <ng-container *ngIf="summary$ | async as s">
+      <div class="dash-tablewrap">
+        <table class="dash-table">
+          <thead>
+            <tr>
+              <th class="dash-table__th">Abteilung</th>
+              <th class="dash-table__th">Anzahl</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="dash-table__tr" *ngFor="let r of s.deptRows">
+              <td class="dash-table__td">{{ r.dept }}</td>
+              <td class="dash-table__td">{{ r.count }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </ng-container>
+  </app-ui-card>
+</section>

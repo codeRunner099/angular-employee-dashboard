@@ -1,0 +1,19 @@
+<aside class="dash-sidebar">
+  <div class="dash-sidebar__brand">
+    <div class="dash-sidebar__logo" aria-hidden="true"></div>
+    <div class="dash-sidebar__name">Unternehmens Dashboard</div>
+  </div>
+
+  <nav class="dash-sidebar__nav" aria-label="Hauptnavigation">
+    <a
+      class="dash-sidebar__item"
+      *ngFor="let item of items"
+      [routerLink]="item.path"
+      routerLinkActive="is-active"
+      [routerLinkActiveOptions]="{ exact: true }"
+    >
+      <div class="dash-sidebar__icon" aria-hidden="true"></div>
+      <span class="dash-sidebar__label">{{ item.label }}</span>
+    </a>
+  </nav>
+</aside>

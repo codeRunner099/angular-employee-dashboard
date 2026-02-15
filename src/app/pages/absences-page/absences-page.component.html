@@ -1,0 +1,77 @@
+<app-ui-card title="Abwesenheit" tone="neutral" subtitle="CRUD + Filter">
+  <div class="dash-actions" *ngIf="employees$ | async as employees">
+    <input class="dash-input" type="text" placeholder="Suche Name oder Abteilung" [ngModel]="q" (ngModelChange)="onQ($event)">
+    <select class="dash-select" [ngModel]="type" (ngModelChange)="onType($event)">
+      <option value="Alle">Alle</option>
+      <option value="Urlaub">Urlaub</option>
+      <option value="Krank">Krank</option>
+      <option value="Andere">Andere</option>
+    </select>
+    <button class="dash-btn" data-tone="primary" type="button" (click)="openNew(employees)">Neuer Eintrag</button>
+  </div>
+
+  <div class="dash-tablewrap" style="margin-top: 14px;">
+    <table class="dash-table">
+      <thead>
+        <tr>
+          <th class="dash-table__th">Mitarbeiter</th>
+          <th class="dash-table__th">Abteilung</th>
+          <th class="dash-table__th">Typ</th>
+          <th class="dash-table__th">Von</th>
+          <th class="dash-table__th">Bis</th>
+          <th class="dash-table__th">Aktion</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="dash-table__tr" *ngFor="let a of (absences$ | async)">
+          <td class="dash-table__td">{{ a.employee?.name ?? "—" }}</td>
+          <td class="dash-table__td">{{ a.employee?.dept ?? "—" }}</td>
+          <td class="dash-table__td">{{ a.type }}</td>
+          <td class="dash-table__td">{{ a.from }}</td>
+          <td class="dash-table__td">{{ a.to }}</td>
+          <td class="dash-table__td" *ngIf="employees$ | async as employees">
+            <div class="dash-actions" style="justify-content: flex-end;">
+              <button class="dash-btn" type="button" (click)="openEdit(a, employees)">Bearbeiten</button>
+              <button class="dash-btn" data-tone="danger" type="button" (click)="remove(a.id)">Löschen</button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</app-ui-card>
+
+<app-ui-modal [open]="modalOpen" title="Abwesenheit speichern" (close)="modalOpen = false">
+  <div class="dash-form" *ngIf="employees$ | async as employees">
+    <div class="dash-field dash-form__full">
+      <label class="dash-label">Mitarbeiter</label>
+      <select class="dash-select" [ngModel]="formEmployeeId" (ngModelChange)="formEmployeeId = $event">
+        <option *ngFor="let e of employees" [value]="e.id">{{ e.name }} ({{ e.dept }})</option>
+      </select>
+    </div>
+
+    <div class="dash-field">
+      <label class="dash-label">Typ</label>
+      <select class="dash-select" [ngModel]="formType" (ngModelChange)="formType = $event">
+        <option value="Urlaub">Urlaub</option>
+        <option value="Krank">Krank</option>
+        <option value="Andere">Andere</option>
+      </select>
+    </div>
+
+    <div class="dash-field">
+      <label class="dash-label">Von</label>
+      <input class="dash-input" type="date" [ngModel]="formFrom" (ngModelChange)="formFrom = $event">
+    </div>
+
+    <div class="dash-field">
+      <label class="dash-label">Bis</label>
+      <input class="dash-input" type="date" [ngModel]="formTo" (ngModelChange)="formTo = $event">
+    </div>
+  </div>
+
+  <div class="dash-modal__foot">
+    <button class="dash-btn" type="button" (click)="modalOpen = false">Abbrechen</button>
+    <button class="dash-btn" data-tone="primary" type="button" (click)="save()">Speichern</button>
+  </div>
+</app-ui-modal>

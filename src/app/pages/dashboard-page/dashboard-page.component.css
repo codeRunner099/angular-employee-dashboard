@@ -1,0 +1,86 @@
+.dash-metricrow
+{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.dash-metric
+{
+  padding: 12px;
+  border-radius: 14px;
+  border: 1px solid var(--dash-border);
+  background: rgba(15, 23, 42, 0.02);
+}
+
+.dash-metric__value
+{
+  font-size: 34px;
+}
+
+.dash-metric__label
+{
+  margin-top: 4px;
+  color: var(--dash-muted);
+  font-size: 12px;
+}
+
+.dash-ctarow
+{
+  margin-top: 12px;
+}
+
+.dash-absencebox
+{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.dash-absencebox__big
+{
+  padding: 12px;
+  border-radius: 14px;
+  border: 1px solid var(--dash-border);
+  background: rgba(25, 118, 210, 0.06);
+}
+
+.dash-absencebox__value
+{
+  font-size: 38px;
+}
+
+.dash-absencebox__label
+{
+  margin-top: 4px;
+  color: var(--dash-muted);
+  font-size: 12px;
+}
+
+.dash-taskbar
+{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px;
+  border-radius: 14px;
+  border: 1px solid var(--dash-border);
+  background: rgba(15, 23, 42, 0.02);
+}
+
+.dash-taskbar__label
+{
+  color: var(--dash-muted);
+  font-size: 12px;
+}
+
+.dash-taskbar__value
+{
+  font-size: 34px;
+}
+
+.dash-reportbox__text
+{
+  color: var(--dash-muted);
+  line-height: 1.35;
+}

@@ -1,0 +1,12 @@
+<section class="dash-card" [attr.data-tone]="tone">
+  <header class="dash-card__head">
+    <div class="dash-card__headtext">
+      <h2 class="dash-card__title">{{ title }}</h2>
+      <div class="dash-card__subtitle" *ngIf="subtitle">{{ subtitle }}</div>
+    </div>
+  </header>
+
+  <div class="dash-card__body">
+    <ng-content></ng-content>
+  </div>
+</section>

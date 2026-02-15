@@ -1,0 +1,87 @@
+<app-ui-card title="Aufgaben" tone="neutral" subtitle="CRUD + Status ändern">
+  <div class="dash-actions" *ngIf="employees$ | async as employees">
+    <input class="dash-input" type="text" placeholder="Suche Aufgabe oder Mitarbeiter" [ngModel]="q" (ngModelChange)="onQ($event)">
+    <select class="dash-select" [ngModel]="status" (ngModelChange)="onStatus($event)">
+      <option value="Alle">Alle</option>
+      <option value="To do">To do</option>
+      <option value="In Arbeit">In Arbeit</option>
+      <option value="Erledigt">Erledigt</option>
+    </select>
+    <button class="dash-btn" data-tone="primary" type="button" (click)="openNew(employees)">Neue Aufgabe</button>
+  </div>
+
+  <div class="dash-tablewrap" style="margin-top: 14px;">
+    <table class="dash-table">
+      <thead>
+        <tr>
+          <th class="dash-table__th">Aufgabe</th>
+          <th class="dash-table__th">Mitarbeiter</th>
+          <th class="dash-table__th">Fällig</th>
+          <th class="dash-table__th">Status</th>
+          <th class="dash-table__th">Aktion</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="dash-table__tr" *ngFor="let t of (tasks$ | async)">
+          <td class="dash-table__td">{{ t.title }}</td>
+          <td class="dash-table__td">{{ t.assignee?.name ?? "—" }}</td>
+          <td class="dash-table__td">{{ t.due }}</td>
+          <td class="dash-table__td">
+            <span class="dash-pill" [attr.data-tone]="pillTone(t.status)">{{ t.status }}</span>
+          </td>
+          <td class="dash-table__td" *ngIf="employees$ | async as employees">
+            <div class="dash-actions" style="justify-content: flex-end;">
+              <select class="dash-select" [ngModel]="t.status" (ngModelChange)="setStatus(t.id, $event)">
+                <option value="To do">To do</option>
+                <option value="In Arbeit">In Arbeit</option>
+                <option value="Erledigt">Erledigt</option>
+              </select>
+              <button class="dash-btn" type="button" (click)="openEdit(t, employees)">Bearbeiten</button>
+              <button class="dash-btn" data-tone="danger" type="button" (click)="remove(t.id)">Löschen</button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</app-ui-card>
+
+<app-ui-modal [open]="modalOpen" title="Aufgabe speichern" (close)="modalOpen = false">
+  <div class="dash-form" *ngIf="employees$ | async as employees">
+    <div class="dash-field dash-form__full">
+      <label class="dash-label">Titel</label>
+      <input class="dash-input" type="text" [ngModel]="formTitle" (ngModelChange)="formTitle = $event">
+    </div>
+
+    <div class="dash-field">
+      <label class="dash-label">Mitarbeiter</label>
+      <select class="dash-select" [ngModel]="formAssigneeId" (ngModelChange)="formAssigneeId = $event">
+        <option *ngFor="let e of employees" [value]="e.id">{{ e.name }} ({{ e.dept }})</option>
+      </select>
+    </div>
+
+    <div class="dash-field">
+      <label class="dash-label">Fällig</label>
+      <input class="dash-input" type="date" [ngModel]="formDue" (ngModelChange)="formDue = $event">
+    </div>
+
+    <div class="dash-field">
+      <label class="dash-label">Status</label>
+      <select class="dash-select" [ngModel]="formStatus" (ngModelChange)="formStatus = $event">
+        <option value="To do">To do</option>
+        <option value="In Arbeit">In Arbeit</option>
+        <option value="Erledigt">Erledigt</option>
+      </select>
+    </div>
+
+    <div class="dash-field dash-form__full">
+      <label class="dash-label">Notizen</label>
+      <textarea class="dash-input dash-textarea" [ngModel]="formNotes" (ngModelChange)="formNotes = $event"></textarea>
+    </div>
+  </div>
+
+  <div class="dash-modal__foot">
+    <button class="dash-btn" type="button" (click)="modalOpen = false">Abbrechen</button>
+    <button class="dash-btn" data-tone="primary" type="button" (click)="save()">Speichern</button>
+  </div>
+</app-ui-modal>

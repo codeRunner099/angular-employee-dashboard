@@ -1,0 +1,31 @@
+.rep-kpis
+{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.rep-kpi
+{
+  padding: 12px;
+  border-radius: 14px;
+  border: 1px solid var(--dash-border);
+  background: rgba(15, 23, 42, 0.02);
+}
+
+.rep-kpi__value
+{
+  font-size: 34px;
+}
+
+.rep-kpi__label
+{
+  margin-top: 4px;
+  color: var(--dash-muted);
+  font-size: 12px;
+}
+
+.rep-actions
+{
+  margin-top: 12px;
+}

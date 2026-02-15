@@ -1,0 +1,11 @@
+<div class="dash-modal__backdrop" *ngIf="open" (click)="onBackdrop($event)">
+  <div class="dash-modal" role="dialog" aria-modal="true">
+    <div class="dash-modal__head">
+      <h3 class="dash-modal__title">{{ title }}</h3>
+      <button class="dash-btn" type="button" (click)="close.emit()">Schließen</button>
+    </div>
+    <div class="dash-modal__body">
+      <ng-content></ng-content>
+    </div>
+  </div>
+</div>

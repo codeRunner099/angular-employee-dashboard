@@ -1,0 +1,68 @@
+<section class="dash-grid">
+  <app-ui-card title="Mitarbeiter-Übersicht" tone="warn" subtitle="Klick führt zur Mitarbeiterliste">
+    <ng-container *ngIf="counts$ | async as c">
+      <div class="dash-metricrow">
+        <div class="dash-metric">
+          <div class="dash-metric__value">{{ c.total }}</div>
+          <div class="dash-metric__label">Gesamt</div>
+        </div>
+        <div class="dash-metric">
+          <div class="dash-metric__value">{{ c.active }}</div>
+          <div class="dash-metric__label">Aktiv</div>
+        </div>
+        <div class="dash-metric">
+          <div class="dash-metric__value">{{ c.absent }}</div>
+          <div class="dash-metric__label">Abwesend</div>
+        </div>
+        <div class="dash-metric">
+          <div class="dash-metric__value">{{ c.inactive }}</div>
+          <div class="dash-metric__label">Inaktiv</div>
+        </div>
+      </div>
+      <div class="dash-ctarow">
+        <a class="dash-btn" data-tone="primary" routerLink="/mitarbeiter">Mitarbeiter öffnen</a>
+      </div>
+    </ng-container>
+  </app-ui-card>
+
+  <app-ui-card title="Abwesenheitsübersicht" tone="accent" subtitle="Live aus Abwesenheitsliste">
+    <ng-container *ngIf="counts$ | async as c">
+      <div class="dash-absencebox">
+        <div class="dash-absencebox__big">
+          <div class="dash-absencebox__value">{{ c.todaysAbsences }}</div>
+          <div class="dash-absencebox__label">Einträge</div>
+        </div>
+        <div class="dash-absencebox__big">
+          <div class="dash-absencebox__value">{{ c.absent }}</div>
+          <div class="dash-absencebox__label">Mitarbeiter abwesend</div>
+        </div>
+      </div>
+      <div class="dash-ctarow">
+        <a class="dash-btn" data-tone="primary" routerLink="/abwesenheit">Abwesenheit öffnen</a>
+      </div>
+    </ng-container>
+  </app-ui-card>
+</section>
+
+<section class="dash-row">
+  <app-ui-card title="Aufgaben" tone="neutral" subtitle="To do / In Arbeit / Erledigt">
+    <ng-container *ngIf="counts$ | async as c">
+      <div class="dash-taskbar">
+        <div class="dash-taskbar__label">Offene Aufgaben</div>
+        <div class="dash-taskbar__value">{{ c.openTasks }}</div>
+      </div>
+      <div class="dash-ctarow">
+        <a class="dash-btn" data-tone="primary" routerLink="/aufgaben">Aufgaben öffnen</a>
+      </div>
+    </ng-container>
+  </app-ui-card>
+
+  <app-ui-card title="Berichte" tone="neutral" subtitle="Zusammenfassung & Export-Vorschau">
+    <div class="dash-reportbox">
+      <div class="dash-reportbox__text">Du bekommst hier eine Mini-Auswertung, die auf den echten Daten aus den Seiten basiert.</div>
+      <div class="dash-ctarow">
+        <a class="dash-btn" data-tone="primary" routerLink="/berichte">Berichte öffnen</a>
+      </div>
+    </div>
+  </app-ui-card>
+</section>
